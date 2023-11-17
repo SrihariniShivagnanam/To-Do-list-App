@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: "Georgia", sans-serif;
+            background: radial-gradient(circle, #8A2BE2, #FFF0F5);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #191970;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+        }
+
+        li {
+            background-color: #E3D4E1;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        li button {
+            padding: 5px 10px;
+            background-color: purple;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        li button:hover {
+            background-color: #ff5555;
+        }
+
+        .completed-task {
+            font-size: 24px;
+            color: #00C800;
+        }
+
+        .task-form {
+            text-align: center;
+        }
+
+        .task-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .task-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px #ccc;
+        }
+
+        .task-form button {
+            padding: 10px 20px;
+            background-color: #00FF00;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .task-form button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <ul>
+        {% for index, task, completed in tasks %}
+            <li>
+                {{ task }}
+                {% if not completed %}
+                    <form method="POST" style="display: inline;">
+                        <button type="submit" name="complete_task" value="{{ index }}">Complete</button>
+                    </form>
+                    <form method="POST" style="display: inline;">
+                        <button type="submit" name="delete_task" value="{{ index }}">Delete</button>
+                    </form>
+                {% else %}
+                    <span class="completed-task">&#10004;</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <form method="POST" class="task-form">
+        <label for="task">Add a task:</label>
+        <input type="text" id="task" name="task" required>
+        <button type="submit" name="add_task">Add Task</button>
+    </form>
+</body>
+</html>
